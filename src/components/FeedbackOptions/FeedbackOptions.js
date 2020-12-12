@@ -3,7 +3,7 @@ import s from './FeedbackOptions.module.css';
 
 const FeedbackOptions = ({ onClick, options }) => {
   return options.map(option => (
-    <button className={s.button} key={option} id={option} onClick={onClick}>
+    <button className={s.button} key={option} onClick={() => onClick(option)}>
       {option}
     </button>
   ));

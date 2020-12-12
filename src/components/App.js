@@ -4,8 +4,6 @@ import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 import Section from './Section/Section';
 import Notification from './Notification/Notification';
 
-const BUTTONS_CONFIG = ['good', 'neutral', 'bad'];
-
 class App extends Component {
   state = {
     good: 0,
@@ -13,9 +11,8 @@ class App extends Component {
     bad: 0,
   };
 
-  handleClick = event => {
-    const id = event.target.id;
-    this.setState(prevState => ({ [id]: prevState[id] + 1 }));
+  handleClick = option => {
+    this.setState(prevState => ({ [option]: prevState[option] + 1 }));
   };
 
   countTotalFeedback = () => {
@@ -29,21 +26,22 @@ class App extends Component {
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
     const total = this.countTotalFeedback();
     return (
       <div>
         <Section title="Please leave feedback">
           <FeedbackOptions
             onClick={this.handleClick}
-            options={BUTTONS_CONFIG}
+            options={Object.keys(this.state)}
           />
         </Section>
         <Section title="Statistics">
           {total ? (
             <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
+              good={good}
+              neutral={neutral}
+              bad={bad}
               total={total}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             />
